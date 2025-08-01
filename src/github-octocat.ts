@@ -22,8 +22,9 @@ async function getGitHubUserData(username: string): Promise<GitHubUser | null> {
 
 // Example usage:
 async function main() {
-    const user = await getGitHubUserData("octocat");
+    const user = await getGitHubUserData("Math-Fauch");
     if (user) {
-        console.log(`User: ${user.login}, ID: ${user.id}`);
+        console.log(user);
     }
 }
+main()

@@ -1,9 +1,10 @@
-function CalculateSum(a: number, b: number) {
-    return a + b;
+function CalculateSum(a: number, b: number, isString: boolean): number | String {
+    return isString ? (a + b).toString() : a + b;
 }
 
 function main() {
-    console.log(CalculateSum(1, 2))
+    console.log(typeof(CalculateSum(1, 2, false)))
+    console.log(typeof(CalculateSum(1, 2, true)))
 }
 
 main()
