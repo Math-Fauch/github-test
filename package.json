@@ -1,0 +1,23 @@
+{
+  "name": "github-test",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Math-Fauch/github-test#readme",
+  "bugs": {
+    "url": "https://github.com/Math-Fauch/github-test/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Math-Fauch/github-test.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}
