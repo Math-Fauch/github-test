@@ -25,3 +25,4 @@ dist-ssr
 
 test.md
 src/PAT.ts
+.env
