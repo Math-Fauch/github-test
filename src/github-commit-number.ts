@@ -1,10 +1,16 @@
 import dotenv from 'dotenv';
 import { Octokit } from 'octokit';
 
+dotenv.config();
+const key: string = process.env.GITHUB_API_KEY;
+if (!key) {
+    throw new Error("missing key");
+}
+
+
 async function getCommitNumber(): Promise<number | null> {
-    dotenv.config();
     const octokit = new Octokit({
-            auth: process.env.GITHUB_API_KEY,
+            auth: key,
         })
     await octokit.request('GET /repos/Math-Fauch/github-test/commits', {
         owner: 'Math-Fauch',
