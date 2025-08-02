@@ -1,12 +1,9 @@
-import dotenv from 'dotenv';
 import { Octokit } from 'octokit';
-
-require('dotenv').config();
+import 'dotenv/config';
 
 
 function main() {
-  console.log(calculateSum(1, 2));
-  console.log(calculateSub(5, 1));
+  getCommitNumber()
 }
 
 function calculateSum(a: number, b: number): number {
@@ -17,8 +14,24 @@ function calculateSub(a: number, b: number): number {
   return a - b;
 }
 
-function getCommitNumber() {
-    const gh-key = new Octokit({auth: process.env.GITHUB_API_KEY})
+async function getCommitNumber() {
+    const octokit = new Octokit({auth: process.env.GITHUB_API_KEY})
+    const owner = 'Math-Fauch'
+    const repo = 'github-test'
+    const request = "GET /repos/" + owner + "/" + repo + "/commits";
+
+    const result = await octokit.request(
+      request,
+      {
+        owner: owner,
+        repo: repo,
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      }
+    );
+
+    console.log(result.data[0])
 }
 
 main();
