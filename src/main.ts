@@ -3,7 +3,7 @@ import "dotenv/config";
 
 async function main() {
   const oneDay = 1000 * 60 * 60 * 24;
-  const numberOfDays = 1.2;
+  const numberOfDays = 1;
   let commitNum: number = await getCommitNumberForDate(
     Date.now() - numberOfDays * oneDay,
     Date.now()
@@ -15,29 +15,18 @@ async function getCommitNumberForDate(
   startDate: number,
   endDate: number
 ): Promise<number> {
-  const commits = await getCommits("Math-Fauch", "github-test")
-  .then(response => JSON.parse(response));
+  const commits: GithubCommit[] = await getCommits("Math-Fauch", "github-test");
 
-  let commitCount = 0;
-  for (let i: number = 0; i < (commits as any).data.length; i++) {
-    let commitDate: number = Date.parse(commits.data[i].commit.author.date);
 
-    if (endDate < commitDate) {
-      continue;
-    }
-    if (startDate > commitDate) {
-      break;
-    }
-    commitCount++;
-  }
-
-  return commitCount;
+  return commits.filter((commit => {
+    let d: number = Date.parse(commit.commit.author.date);
+    return d > startDate && d < endDate;
+  })).length;
 }
 
-async function getCommits(owner: string, repo: string): Promise<string> {
+async function getCommits(owner: string, repo: string): Promise<GithubCommit[]> {
   const octokit = new Octokit({ auth: process.env.GITHUB_API_KEY });
   const request = "GET /repos/" + owner + "/" + repo + "/commits";
-
   const result = await octokit.request(request, {
     owner: owner,
     repo: repo,
@@ -46,7 +35,7 @@ async function getCommits(owner: string, repo: string): Promise<string> {
     },
   });
 
-  return JSON.stringify(result);
+  return result.data;
 }
 
 main();
