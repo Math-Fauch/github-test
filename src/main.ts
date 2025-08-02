@@ -5,8 +5,8 @@ async function main() {
   const oneDay = 1000 * 60 * 60 * 24;
   const numberOfDays = 1.2;
   let commitNum: number = await getCommitNumberForDate(
-    0,
-    Date.now() - numberOfDays * oneDay
+    Date.now() - numberOfDays * oneDay,
+    Date.now()
   );
   console.log(commitNum);
 }
