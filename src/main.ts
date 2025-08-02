@@ -15,10 +15,11 @@ async function getCommitNumberForDate(
   startDate: number,
   endDate: number
 ): Promise<number> {
-  const commits: any = await getCommits("Math-Fauch", "github-test");
+  const commits = await getCommits("Math-Fauch", "github-test")
+  .then(response => JSON.parse(response));
 
   let commitCount = 0;
-  for (let i: number = 0; i < commits.data.length; i++) {
+  for (let i: number = 0; i < (commits as any).data.length; i++) {
     let commitDate: number = Date.parse(commits.data[i].commit.author.date);
 
     if (endDate < commitDate) {
@@ -33,7 +34,7 @@ async function getCommitNumberForDate(
   return commitCount;
 }
 
-async function getCommits(owner: string, repo: string): Promise<object> {
+async function getCommits(owner: string, repo: string): Promise<string> {
   const octokit = new Octokit({ auth: process.env.GITHUB_API_KEY });
   const request = "GET /repos/" + owner + "/" + repo + "/commits";
 
@@ -45,7 +46,7 @@ async function getCommits(owner: string, repo: string): Promise<object> {
     },
   });
 
-  return JSON;
+  return JSON.stringify(result);
 }
 
 main();
