@@ -15,7 +15,7 @@ async function getCommitNumberForDate(
   startDate: number,
   endDate: number
 ): Promise<number> {
-  const commits = await getCommits("Math-Fauch", "github-test");
+  const commits: any = await getCommits("Math-Fauch", "github-test");
 
   let commitCount = 0;
   for (let i: number = 0; i < commits.data.length; i++) {
@@ -45,7 +45,7 @@ async function getCommits(owner: string, repo: string): Promise<object> {
     },
   });
 
-  return result;
+  return JSON;
 }
 
 main();
