@@ -1,11 +1,38 @@
-import 'dotenv/config';
+import "dotenv/config";
 
-export async function getWeather(): Promise<string> {
-    const key = process.env.OPENWEATHERMAP_API_KEY;
-    const response = await fetch("https://api.openweathermap.org/data/3.0/onecall?lat=46.85165&lon=-70.969717&appid=" + key);
+export async function getWeatherInspirationMessage(lat: number, lon: number): Promise<string> {
+  const key = process.env.OPENWEATHERMAP_API_KEY;
+  let request: string =
+    "https://api.openweathermap.org/data/2.5/weather?lat=" +
+    lat +
+    "&lon=" +
+    lon +
+    "&appid=" +
+    key;
 
+  const response = await fetch(request);
 
+  if (!response.ok) {
+    throw new Error(`HTTP error! ${response.status}`);
+  }
 
-    return '';
+  const data = await response.json();
+  let weatherId: number = data.weather[0].description;
+
+  return evaluateWeatherQuality(weatherId);
 }
-getWeather()
+
+function evaluateWeatherQuality(weatherId: number): string {
+  if (weatherId < 300) {
+    return "You could have lost this programming time :/";
+  } else if (weatherId < 600) {
+    return "You are a rat that could have gone outside...";
+  } else if (weatherId < 700) {
+    return "You spent way too much time on this project...";
+  } else if (weatherId < 800) {
+    return "How can this happen here O.o";
+  } else {
+    return "You could have gotten climbing...";
+  }
+}
+
