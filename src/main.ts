@@ -1,4 +1,4 @@
-import { getCommitNumberForDate } from "./Github-API/commits.ts";
+import { getCommitNumberForDate } from "./githubApi/commits.ts";
 
 async function main() {
   const oneDay = 1000 * 60 * 60 * 24;
